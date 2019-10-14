@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Threading;
@@ -15,7 +14,7 @@ namespace Azure.Security.KeyVault.Certificates
     {
         private bool _hasValue = false;
         private bool _completed = false;
-        private CertificateClient _client;
+        private readonly CertificateClient _client;
 
         internal CertificateOperation(Response<CertificateOperationProperties> properties, CertificateClient client)
             : base(properties.Value.Id.ToString())
@@ -58,7 +57,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             if (Properties.Status == "completed")
             {
-                Response<CertificateWithPolicy> getResponse = _client.GetCertificateWithPolicy(Properties.Name, cancellationToken);
+                Response<CertificateWithPolicy> getResponse = _client.GetCertificate(Properties.Name, cancellationToken);
 
                 SetRawResponse(getResponse.GetRawResponse());
 
@@ -102,7 +101,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             if (Properties.Status == "completed")
             {
-                Response<CertificateWithPolicy> getResponse = await _client.GetCertificateWithPolicyAsync(Properties.Name, cancellationToken).ConfigureAwait(false);
+                Response<CertificateWithPolicy> getResponse = await _client.GetCertificateAsync(Properties.Name, cancellationToken).ConfigureAwait(false);
 
                 SetRawResponse(getResponse.GetRawResponse());
 

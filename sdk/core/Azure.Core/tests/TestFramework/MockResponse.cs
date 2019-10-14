@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Azure.Core.Http;
-using Azure.Core.Pipeline;
 
 namespace Azure.Core.Testing
 {
@@ -28,6 +26,8 @@ namespace Azure.Core.Testing
         public override Stream ContentStream { get; set; }
 
         public override string ClientRequestId { get; set; }
+
+        public bool IsDisposed { get; private set; }
 
         public override string ToString() => $"{Status}";
 
@@ -96,6 +96,7 @@ namespace Azure.Core.Testing
 
         public override void Dispose()
         {
+            IsDisposed = true;
         }
     }
 }
